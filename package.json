@@ -1,0 +1,35 @@
+{
+  "name": "irys",
+  "version": "1.0.0",
+  "description": "IRYS — AI Governance & Server Access control plane for provider organisations",
+  "type": "module",
+  "license": "Polyform-Noncommercial-1.0.0",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "seed": "node server/seed.js",
+    "mcp": "node mcp/irys-mcp.js",
+    "cli": "node cli/irys.js",
+    "build:frontend": "node build-frontend.mjs",
+    "showcase:mcp": "node mcp/showcase.cjs",
+    "showcase:cli": "bash showcase/cli-demo.sh",
+    "test:autosync": "node scripts/test-autosync.mjs",
+    "smoke": "bash smoke-test.sh"
+  },
+  "bin": {
+    "irys": "cli/irys.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
