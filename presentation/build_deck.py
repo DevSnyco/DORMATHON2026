@@ -61,33 +61,48 @@ def star(c, cx, cy, size, color, alpha=None):
     if alpha is not None: c.setFillAlpha(1)
 
 
+def glow(c, cx, cy, r, color=RED500, alpha=0.08):
+    """Soft radial glow."""
+    steps = max(12, int(r/6))
+    for i in range(steps, 0, -1):
+        a = alpha * (i/steps)
+        c.setFillColor(C(color)); c.setFillAlpha(a)
+        c.circle(cx, cy, r*(i/steps), stroke=0, fill=1)
+    c.setFillAlpha(1)
+
+
 def bg(c, W, H, watermark=False):
     c.setFillColor(C(BG1)); c.rect(0,0,W,H,stroke=0,fill=1)
     if watermark:
-        star(c, W*0.82, H*0.30, W*0.62, RED500, alpha=0.03)
-    # top vignette
-    cx,cy=W/2,H+H*0.06
-    for i in range(26,0,-1):
-        r=i*(W*0.045)
-        c.setFillColor(C(RED500)); c.setFillAlpha(0.005)
-        c.ellipse(cx-r,cy-r*0.72,cx+r,cy+r*0.72,stroke=0,fill=1)
+        # large soft bloom in upper right
+        glow(c, W*0.85, H*0.22, W*0.9, RED500, alpha=0.05)
+        star(c, W*0.82, H*0.30, W*0.62, RED500, alpha=0.02)
+    # soft red top glow
+    glow(c, W/2, H*0.92, W*1.25, RED500, alpha=0.05)
+    # top vignette (softer)
+    cx,cy=W/2,H+H*0.04
+    for i in range(28,0,-1):
+        r=i*(W*0.05)
+        c.setFillColor(C(RED500)); c.setFillAlpha(0.0025)
+        c.ellipse(cx-r,cy-r*0.68,cx+r,cy+r*0.68,stroke=0,fill=1)
     c.setFillAlpha(1)
-    # red hairline grid, faded downward
-    step=24; c.setLineWidth(0.5); fade_end=H*0.62
+    # refined red hairline grid, fades quickly downward
+    step=40; c.setLineWidth(0.5); fade_end=H*0.48
     x=0
     while x<=W:
-        for s in range(14):
-            y0=H-(H*s/14); y1=H-(H*(s+1)/14)
-            a=0.05*max(0.0,1-(H-y0)/fade_end)
-            if a<=0.004: break
+        a = 0.03 * max(0.0, 1 - (0)/(fade_end))  # keep minimal
+        for s in range(10):
+            y0=H-(H*s/10); y1=H-(H*(s+1)/10)
+            a=0.024 * max(0.0,1-(H-y0)/fade_end)
+            if a<=0.002: break
             c.setStrokeAlpha(a); c.setStrokeColor(C(RED500)); c.line(x,y0,x,y1)
         x+=step
     y=0
     while y<=H:
-        for s in range(20):
-            x0=(W*s/20); x1=(W*(s+1)/20)
-            a=0.05*max(0.0,1-(H-y)/fade_end)
-            if a<=0.004: break
+        for s in range(14):
+            x0=(W*s/14); x1=(W*(s+1)/14)
+            a=0.024 * max(0.0,1-(H-y)/fade_end)
+            if a<=0.002: break
             c.setStrokeAlpha(a); c.setStrokeColor(C(RED500)); c.line(x0,y,x1,y)
         y+=step
     c.setStrokeAlpha(1)
