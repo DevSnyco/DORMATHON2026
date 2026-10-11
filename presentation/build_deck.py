@@ -326,30 +326,34 @@ def s03_idea(c):
 
 def s04_pillars(c):
     bg(c, W, H)
-    # title lower
-    eyebrow(c, 56, H-68, 'what irys does')
-    headline(c, 56, H-110, 'Four surfaces, one control plane.', size=30, maxw=W-112)
-    y_rule = H-138
-    hairline(c, 56, W-56, y_rule)
+    # minimal, low
+    c.setFont(SANSX, 36)
+    c.setFillColor(C(FG0))
+    c.drawString(56, H-110, 'What IRYS does')
+    c.setFont(SANSM, 16)
+    c.setFillColor(C(FG1))
+    c.drawString(56, H-140, 'Four surfaces, one control plane.')
+    hairline(c, 56, W-56, H-156)
     items = [
         ('AI governance files', icon_doc, RED500, 'AGENTS.md / COMMANDCODE.md / IRYS.md generated from toggles, compliance & quality controls — describe mode or fully manual.'),
         ('Scoped SSH access', icon_key, OK400, 'Members scoped project-by-project. authorized_keys recomputed per scope; keys added and removed from the dashboard.'),
         ('Deployment procedures', icon_deploy, AMBER400, 'Free-text guideline + optional steps → generated bash script and systemd unit at /services/{project}.'),
         ('Audit everything', icon_audit, BLUE400, 'Logins, key syncs, scope changes, deploys — every governed action recorded and queryable via CLI / MCP.'),
     ]
-    cw, ch, gx, gy = 420, 134, 20, 12
-    x0, y0 = 56, y_rule - 70
-    for i, (title, icon, tone, desc) in enumerate(items):
-        x = x0 + (i % 2) * (cw + gx)
-        yy = y0 - (i // 2) * (ch + gy)
-        card(c, x, yy, cw, ch, accent=tone)
-        ccx, ccy = icon_tile(c, x + 16, yy + ch - 50, 36, tone)
-        icon(c, ccx, ccy, tone)
-        c.setFont(SANSB, 14)
+    cw, ch = 420, 116
+    gx, gy = 20, 10
+    x0, y0 = 56, H-240
+    for i, (title, icon_fn, tone, desc) in enumerate(items):
+        x = x0 + (i % 2)*(cw+gx)
+        yy = y0 - (i//2)*(ch+gy)
+        card(c,x,yy,cw,ch,accent=tone)
+        cx,cy = icon_tile(c,x+12,yy+ch-42,32,tone)
+        icon_fn(c,cx,cy,tone)
+        c.setFont(SANSB,13)
         c.setFillColor(C(FG0))
-        c.drawString(x + 62, yy + ch - 30, title)
-        para(c, x + 18, yy + ch - 66, desc, cw - 36, size=10.5, color=FG1, lh=1.32)
-    footer(c, W, H, 4, TOTAL)
+        c.drawString(x+54,yy+ch-26,title)
+        para(c,x+14,yy+ch-56,desc,cw-28,size=10,color=FG1,lh=1.28)
+    footer(c,W,H,4,TOTAL)
     c.showPage()
 def s05_how(c):
     """CORRECTED SSH story: keys pull (no inbound SSH from IRYS); deploys act (agent SSHes in)."""
