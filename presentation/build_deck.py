@@ -333,18 +333,18 @@ def s04_pillars(c):
         ('Deployment procedures', icon_deploy, AMBER400, 'Free-text guideline + optional steps → generated bash script and systemd unit at /services/{project}.'),
         ('Audit everything', icon_audit, BLUE400, 'Logins, key syncs, scope changes, deploys — every governed action recorded and queryable via CLI / MCP.'),
     ]
-    cw, ch, gx, gy = 420, 150, 20, 16
-    x0, y0 = 56, y - 12
+    cw, ch, gx, gy = 420, 146, 20, 14
+    x0, y0 = 56, y - 40  # push down further
     for i, (title, icon, tone, desc) in enumerate(items):
         x = x0 + (i % 2) * (cw + gx)
         yy = y0 - (i // 2) * (ch + gy)
         card(c, x, yy, cw, ch, accent=tone)
-        ccx, ccy = icon_tile(c, x + 18, yy + ch - 54, 38, tone)
+        ccx, ccy = icon_tile(c, x + 18, yy + ch - 52, 38, tone)
         icon(c, ccx, ccy, tone)
         c.setFont(SANSB, 15)
         c.setFillColor(C(FG0))
-        c.drawString(x + 68, yy + ch - 34, title)
-        para(c, x + 20, yy + ch - 72, desc, cw - 40, size=11, color=FG1, lh=1.34)
+        c.drawString(x + 68, yy + ch - 32, title)
+        para(c, x + 20, yy + ch - 70, desc, cw - 40, size=11, color=FG1, lh=1.34)
     footer(c, W, H, 4, TOTAL)
     c.showPage()
 def s05_how(c):
