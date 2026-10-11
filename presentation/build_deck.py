@@ -326,21 +326,27 @@ def s03_idea(c):
 
 def s04_pillars(c):
     bg(c, W, H)
-    y=slide_header(c,W,H,'what irys does','Four surfaces, one control plane.')
-    items=[('AI governance files',icon_doc,RED500,'AGENTS.md / COMMANDCODE.md / IRYS.md generated from toggles, compliance & quality controls — describe mode or fully manual.'),
-           ('Scoped SSH access',icon_key,OK400,'Members scoped project-by-project. authorized_keys recomputed per scope; keys added and removed from the dashboard.'),
-           ('Deployment procedures',icon_deploy,AMBER400,'Free-text guideline + optional steps → generated bash script and systemd unit at /services/{project}.'),
-           ('Audit everything',icon_audit,BLUE400,'Logins, key syncs, scope changes, deploys — every governed action recorded and queryable via CLI / MCP.')]
-    cw,ch,gx,gy=412,148,24,18; x0=56; y0=y-8
-    for i,(title,icon,tone,desc) in enumerate(items):
-        x=x0+(i%2)*(cw+gx); yy=y0-(i//2)*(ch+gy)
-        card(c,x,yy,cw,ch,accent=tone)
-        ccx,ccy=icon_tile(c,x+20,yy+ch-58,40,tone); icon(c,ccx,ccy,tone)
-        c.setFont(SANSB,16); c.setFillColor(C(FG0)); c.drawString(x+74,yy+ch-38,title)
-        para(c,x+20,yy+ch-76,desc,cw-40,size=11.5,color=FG1)
-    footer(c,W,H,4,TOTAL); c.showPage()
-
-
+    y = slide_header(c, W, H, 'what irys does', 'Four surfaces, one control plane.')
+    items = [
+        ('AI governance files', icon_doc, RED500, 'AGENTS.md / COMMANDCODE.md / IRYS.md generated from toggles, compliance & quality controls — describe mode or fully manual.'),
+        ('Scoped SSH access', icon_key, OK400, 'Members scoped project-by-project. authorized_keys recomputed per scope; keys added and removed from the dashboard.'),
+        ('Deployment procedures', icon_deploy, AMBER400, 'Free-text guideline + optional steps → generated bash script and systemd unit at /services/{project}.'),
+        ('Audit everything', icon_audit, BLUE400, 'Logins, key syncs, scope changes, deploys — every governed action recorded and queryable via CLI / MCP.'),
+    ]
+    cw, ch, gx, gy = 420, 150, 20, 16
+    x0, y0 = 56, y - 12
+    for i, (title, icon, tone, desc) in enumerate(items):
+        x = x0 + (i % 2) * (cw + gx)
+        yy = y0 - (i // 2) * (ch + gy)
+        card(c, x, yy, cw, ch, accent=tone)
+        ccx, ccy = icon_tile(c, x + 18, yy + ch - 54, 38, tone)
+        icon(c, ccx, ccy, tone)
+        c.setFont(SANSB, 15)
+        c.setFillColor(C(FG0))
+        c.drawString(x + 68, yy + ch - 34, title)
+        para(c, x + 20, yy + ch - 72, desc, cw - 40, size=11, color=FG1, lh=1.34)
+    footer(c, W, H, 4, TOTAL)
+    c.showPage()
 def s05_how(c):
     """CORRECTED SSH story: keys pull (no inbound SSH from IRYS); deploys act (agent SSHes in)."""
     bg(c, W, H)
