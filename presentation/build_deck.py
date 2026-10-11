@@ -326,25 +326,29 @@ def s03_idea(c):
 
 def s04_pillars(c):
     bg(c, W, H)
-    y = slide_header(c, W, H, 'what irys does', 'Four surfaces, one control plane.')
+    # title lower
+    eyebrow(c, 56, H-68, 'what irys does')
+    headline(c, 56, H-110, 'Four surfaces, one control plane.', size=30, maxw=W-112)
+    y_rule = H-138
+    hairline(c, 56, W-56, y_rule)
     items = [
         ('AI governance files', icon_doc, RED500, 'AGENTS.md / COMMANDCODE.md / IRYS.md generated from toggles, compliance & quality controls — describe mode or fully manual.'),
         ('Scoped SSH access', icon_key, OK400, 'Members scoped project-by-project. authorized_keys recomputed per scope; keys added and removed from the dashboard.'),
         ('Deployment procedures', icon_deploy, AMBER400, 'Free-text guideline + optional steps → generated bash script and systemd unit at /services/{project}.'),
         ('Audit everything', icon_audit, BLUE400, 'Logins, key syncs, scope changes, deploys — every governed action recorded and queryable via CLI / MCP.'),
     ]
-    cw, ch, gx, gy = 420, 146, 20, 14
-    x0, y0 = 56, y - 40  # push down further
+    cw, ch, gx, gy = 420, 134, 20, 12
+    x0, y0 = 56, y_rule - 70
     for i, (title, icon, tone, desc) in enumerate(items):
         x = x0 + (i % 2) * (cw + gx)
         yy = y0 - (i // 2) * (ch + gy)
         card(c, x, yy, cw, ch, accent=tone)
-        ccx, ccy = icon_tile(c, x + 18, yy + ch - 52, 38, tone)
+        ccx, ccy = icon_tile(c, x + 16, yy + ch - 50, 36, tone)
         icon(c, ccx, ccy, tone)
-        c.setFont(SANSB, 15)
+        c.setFont(SANSB, 14)
         c.setFillColor(C(FG0))
-        c.drawString(x + 68, yy + ch - 32, title)
-        para(c, x + 20, yy + ch - 70, desc, cw - 40, size=11, color=FG1, lh=1.34)
+        c.drawString(x + 62, yy + ch - 30, title)
+        para(c, x + 18, yy + ch - 66, desc, cw - 36, size=10.5, color=FG1, lh=1.32)
     footer(c, W, H, 4, TOTAL)
     c.showPage()
 def s05_how(c):
