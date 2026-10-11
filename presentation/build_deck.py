@@ -75,15 +75,15 @@ def bg(c, W, H, watermark=False):
     c.setFillColor(C(BG1)); c.rect(0,0,W,H,stroke=0,fill=1)
     if watermark:
         # large soft bloom in upper right
-        glow(c, W*0.85, H*0.22, W*0.9, RED500, alpha=0.05)
-        star(c, W*0.82, H*0.30, W*0.62, RED500, alpha=0.02)
+        glow(c, W*0.85, H*0.22, W*0.9, RED500, alpha=0.015)
+        star(c, W*0.82, H*0.30, W*0.62, RED500, alpha=0.008)
     # soft red top glow
-    glow(c, W/2, H*0.92, W*1.25, RED500, alpha=0.05)
+    glow(c, W/2, H*0.92, W*1.25, RED500, alpha=0.015)
     # top vignette (softer)
     cx,cy=W/2,H+H*0.04
     for i in range(28,0,-1):
         r=i*(W*0.05)
-        c.setFillColor(C(RED500)); c.setFillAlpha(0.0025)
+        c.setFillColor(C(RED500)); c.setFillAlpha(0.001)
         c.ellipse(cx-r,cy-r*0.68,cx+r,cy+r*0.68,stroke=0,fill=1)
     c.setFillAlpha(1)
     # refined red hairline grid, fades quickly downward
@@ -93,7 +93,7 @@ def bg(c, W, H, watermark=False):
         a = 0.03 * max(0.0, 1 - (0)/(fade_end))  # keep minimal
         for s in range(10):
             y0=H-(H*s/10); y1=H-(H*(s+1)/10)
-            a=0.024 * max(0.0,1-(H-y0)/fade_end)
+            a=0.008 * max(0.0,1-(H-y0)/fade_end)
             if a<=0.002: break
             c.setStrokeAlpha(a); c.setStrokeColor(C(RED500)); c.line(x,y0,x,y1)
         x+=step
@@ -101,7 +101,7 @@ def bg(c, W, H, watermark=False):
     while y<=H:
         for s in range(14):
             x0=(W*s/14); x1=(W*(s+1)/14)
-            a=0.024 * max(0.0,1-(H-y)/fade_end)
+            a=0.008 * max(0.0,1-(H-y)/fade_end)
             if a<=0.002: break
             c.setStrokeAlpha(a); c.setStrokeColor(C(RED500)); c.line(x0,y,x1,y)
         y+=step
